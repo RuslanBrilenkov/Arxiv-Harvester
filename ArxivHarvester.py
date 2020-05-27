@@ -1,5 +1,6 @@
 import urllib.request
-#import urllib.parse
+import re
+import numpy as np
 
 def Harvester():
 	'''
@@ -24,17 +25,52 @@ def Harvester():
 			
 	except Exception as e:
 		print(e)
+	return None
 
-def OpenResponse():
+def ReadingArxivData():
 	'''
-	Reading saved (.txt) data of website response
+	Reading saved (.txt) data of website response.
+	Separating the titles from the text using regular expressions.
+	Going through each paper title to get interesting papers by using 
+	the numpy method intersect1d.
 	'''
-	with open("Arxiv_data.txt", "r") as file:
-		Data = file.read()
-	print(Data)
+	try:
+		with open("Arxiv_data.txt", "r") as file:
+			Data = file.read()
+		#print(Data)
 
+		# separating the title names from the text
+		titles = re.findall(r"Title:</span>(.*?)\\n</div>", Data)
+		
+		# Example key words of our interest
+		My_keyWords = ['ALMA', 'dust', 'attenuation','IRX-beta', 'IRX', 'HST', '21cm']
+		
+		title_counter = 0
+		# going through each title and comparing with the key words of our interest
+		for title in titles:
+			# we split the words
+			titleList = title.split(' ')
+			
+			# Checking the intersection between array of our key words and the selected titles
+			# (in case there are more than 1 key word in the title, get the tite once)
+			if (len(np.intersect1d(My_keyWords, titleList))>0):
+				print("Found {keyword} in\n{title}\n".format(keyword=np.intersect1d(My_keyWords, titleList), title = title))
+				title_counter += 1
+		
+		# printing a nice message for a user with a number of articles found
+		if (title_counter==0):
+			print("Unfortunately, I did not find any articles! Try to change the key words.")
+		else:
+			print("\nFound {} titles you might be interested in.\n".format(title_counter))
+	
+	except Exception as e:
+		# in case the program fails at some point, see what is the reason
+		print(e)
+		pass
+	
+	return None
+	
 if (__name__=="__main__"):
 	#Harvester()
-	OpenResponse()
-
+	ReadingArxivData()
 
