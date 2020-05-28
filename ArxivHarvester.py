@@ -46,6 +46,7 @@ def ReadingArxivData():
 		My_keyWords = ['ALMA', 'dust', 'attenuation','IRX-beta', 'IRX', 'HST', '21cm']
 		
 		title_counter = 0
+		TitlesToSave = []
 		# going through each title and comparing with the key words of our interest
 		for title in titles:
 			# we split the words
@@ -55,7 +56,10 @@ def ReadingArxivData():
 			# (in case there are more than 1 key word in the title, get the tite once)
 			if (len(np.intersect1d(My_keyWords, titleList))>0):
 				print("Found {keyword} in\n{title}\n".format(keyword=np.intersect1d(My_keyWords, titleList), title = title))
+				TitlesToSave.append(str(title))
 				title_counter += 1
+		with open("Arxiv_data_titles.txt", "w") as file:
+			file.write(str(TitlesToSave) )
 		
 		# printing a nice message for a user with a number of articles found
 		if (title_counter==0):
