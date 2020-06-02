@@ -12,3 +12,4 @@ a text file.
 Run as
 || python ArxivHarvester.py
 
+If you are doing science and tired/lazy of manually going through arxiv every day, this program might be just right for you.
