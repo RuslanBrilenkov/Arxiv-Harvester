@@ -3,6 +3,7 @@ import re
 import numpy as np
 import datetime
 import pandas as pd
+import json
 
 def Harvester():
 	'''
@@ -131,12 +132,10 @@ def SavingLinksAndTitles():
 	
 	return None
 
-def UsingPands():
-	pass
 
 if (__name__=="__main__"):
 	#Harvester()
 	#SavingTitles()
+	
 	SavingLinksAndTitles()
-	#PrintData()
 
