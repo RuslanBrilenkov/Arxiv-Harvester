@@ -2,6 +2,7 @@ import requests
 from bs4 import BeautifulSoup
 import numpy as np
 from tqdm.auto import tqdm # for a progress bar
+import re
 #import pandas as pd
 
 def crawl():
@@ -23,6 +24,16 @@ def crawl():
 	TitlesToSave = []
 	LinksToSave = []
 
+	# Creatting an array of links to papers - using regular expressions (re)
+	Links = []
+	for T in dt:
+		links = T.find_all('a', title='Download PDF')
+		link = re.findall(r"href\=\"(.*?)\"", str(links) )
+		Links.append(link)
+	#print(Links)
+	
+	# now, separating titles and looking for interesting ones
+	indx = 0
 	for data in tqdm(dd):
 		
 		title = data.find_all(class_="list-title mathjax")
@@ -38,11 +49,15 @@ def crawl():
 	#         LinksToSave.append(str("https://arxiv.org/pdf/"+text[0]+".pdf"))
 			title_counter += 1
 			
+			LinksToSave.append("https://arxiv.org"+str(Links[indx][0]) )
+		indx +=1
+			
 	# printing a nice message for a user with a number of articles found
 	if (title_counter==0):
 		print("Unfortunately, I did not find any articles! Try to change the key words.")
 	else:
 		print("\nFound {} title(s) you might be interested in.\n".format(title_counter))
+		print(LinksToSave)
 	
 	
 if (__name__=="__main__"):
