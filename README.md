@@ -8,7 +8,7 @@ Then, save the response of your request in the file.
 After opening the file, you can work with it locally after aving a response text if you wish.
 It would be useful to use regular expressions, as the website response is
 a text file.
-A recent alternative is with BeautifulSoup package which can give pretty outputs from the HTML responses. This project has two analogous codes - one using only requests and regular expressions, and another using in addition Beaitiful Soup. Chose any you and let's start harvesting!
+A recent alternative is with BeautifulSoup package which can give pretty outputs from the HTML responses. This project has two analogous codes - one using only requests and regular expressions, and another using in addition Beaitiful Soup. Chose any and let's start harvesting!
 
 Run as
 || python ArxivHarvester.py
